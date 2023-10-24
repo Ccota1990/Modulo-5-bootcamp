@@ -26,7 +26,6 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -56,9 +55,7 @@ h1 {
   filter: drop-shadow(0 0 2em #3178c6aa);
 }
 
-.card {
-  padding: 2em;
-}
+
 
 .read-the-docs {
   color: #888;
@@ -94,4 +91,8 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+#nuevaPartida {
+  visibility: hidden;
 }
