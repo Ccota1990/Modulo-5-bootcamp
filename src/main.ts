@@ -4,9 +4,9 @@ let puntuacionInicial : number = 0;
 const muestraPuntuacion = () => {
   const puntuacion = document.getElementById ("puntos")
   if(puntuacion) {
-      puntuacion.innerHTML = `Tu puntuación es: ${puntuacionInicial.toString()}`
+      puntuacion.innerHTML = `Tu puntuación es ${puntuacionInicial.toString()}`
     }
-};
+}
 
 document.addEventListener("DOMContentLoaded", muestraPuntuacion);
 
@@ -88,7 +88,7 @@ const mePlanto = () => {
             if(puntuacionInicial===5) {
                 resultado.innerHTML = "Te ha entrado el canguelo eh?"
             }
-            if(puntuacionInicial===6 || puntuacionInicial===7){
+            if(puntuacionInicial>=6 && puntuacionInicial<=7){
                 resultado.innerHTML = "Casi casi..."
             }
             if(puntuacionInicial===7.5){
@@ -103,7 +103,28 @@ const mePlanto = () => {
 };
 
 const nuevaPartida = () =>{
+    let cartaElement = document.getElementById("carta") 
+    let puntuacion = document.getElementById("puntos")
+    let botonPedirCarta = document.getElementById("pedirCarta")
+    let botonNuevaPartida = document.getElementById("nuevaPartida")
+    let resultado = document.getElementById ("resultado")
 
+    if(cartaElement && cartaElement instanceof HTMLImageElement){
+        cartaElement.src = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg"
+    }
+    if(puntuacion){
+        puntuacion.innerHTML = "0"
+        puntuacionInicial = 0
+    }
+    if(botonPedirCarta && botonPedirCarta instanceof HTMLButtonElement){
+        botonPedirCarta.disabled=false
+    }
+    if(botonNuevaPartida && botonNuevaPartida instanceof HTMLButtonElement){
+        botonNuevaPartida.style.visibility="hidden";
+    }
+    if(resultado){
+        resultado.innerHTML = ""
+    }
 };
 
 const botonPedirCarta = document.getElementById ("pedirCarta");
