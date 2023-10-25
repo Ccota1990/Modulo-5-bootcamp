@@ -3,7 +3,7 @@ let puntuacionInicial : number = 0;
 
 const muestraPuntuacion = () => {
   const puntuacion = document.getElementById ("puntos")
-  if(puntuacion) {
+  if(puntuacion !== null && puntuacion !== undefined && puntuacion instanceof HTMLElement) {
       puntuacion.innerHTML = `Tu puntuación es ${puntuacionInicial.toString()}`
     }
 }
@@ -20,68 +20,97 @@ const dameCarta = ()  => {
     }
 };
 
-const muestraCarta = (carta: number) :void =>{
-    let cartaElement = document.getElementById("carta") 
-    if (cartaElement && cartaElement instanceof HTMLImageElement){
+const getUrl = (carta: number) :string =>{
         switch(carta){
-            case 1: cartaElement.src = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/1_as-copas.jpg";
-                break;
-            case 2: cartaElement.src = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/2_dos-copas.jpg";
-                break;
-            case 3: cartaElement.src = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/3_tres-copas.jpg";
-                break;
-            case 4: cartaElement.src = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/4_cuatro-copas.jpg";
-                break;
-            case 5: cartaElement.src = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/5_cinco-copas.jpg";
-                break;
-            case 6: cartaElement.src = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/6_seis-copas.jpg";
-                break;
-            case 7: cartaElement.src = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/7_siete-copas.jpg";
-                break;
-            case 10: cartaElement.src = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/10_sota-copas.jpg";
-                break;
-            case 11: cartaElement.src = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/11_caballo-copas.jpg";
-                break;
-            case 12: cartaElement.src = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/12_rey-copas.jpg";
-                break;
+            case 1: return "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/1_as-copas.jpg";
+                 
+            case 2: return "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/2_dos-copas.jpg";
+                
+            case 3: return "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/3_tres-copas.jpg";
+                 
+            case 4: return "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/4_cuatro-copas.jpg";
+                 
+            case 5: return "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/5_cinco-copas.jpg";
+                 
+            case 6: return "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/6_seis-copas.jpg";
+                 
+            case 7: return "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/7_siete-copas.jpg";
+                 
+            case 10: return "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/10_sota-copas.jpg";
+                 
+            case 11: return "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/11_caballo-copas.jpg";
+                 
+            case 12: return "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/copas/12_rey-copas.jpg";
+             
+            default: return "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg" ; 
         }
-    }
+};
 
+const muestraCarta = (url: string) =>{
+    const imagenCarta = document.getElementById("carta")
+    if(imagenCarta !== null && imagenCarta !== undefined && imagenCarta instanceof HTMLImageElement){
+        imagenCarta.src = url
+    }
 };
 
 const pideCarta = () => {
     const carta = dameCarta();
-    muestraCarta(carta);
+    const url = getUrl(carta);
+    muestraCarta(url);
+    sumarPuntuacion(carta);
+    muestraPuntuacion();
+    comprobarPuntuacion();
+
+};
+
+const sumarPuntuacion = (carta: number) =>{
     if(carta<8){
         puntuacionInicial = puntuacionInicial + carta 
     }else{
         puntuacionInicial = puntuacionInicial + 0.5
-    }
-    muestraPuntuacion();
-    
+    }  
+}
+
+const comprobarPuntuacion =() =>{
     if(puntuacionInicial>7.5){
         let boton = document.getElementById("pedirCarta")
-        if(boton && boton instanceof HTMLButtonElement){
+        if(boton  !== null && boton!== undefined && boton instanceof HTMLButtonElement){
             boton.disabled = true 
         };
         const resultado = document.getElementById ("resultado")
-        if(resultado && resultado instanceof HTMLElement) {
+        if(resultado !== null && resultado !== undefined && resultado instanceof HTMLElement) {
             resultado.innerHTML = "¡¡Game over!!"
         }
         const botonNuevaPartida = document.getElementById("nuevaPartida")
-        if(botonNuevaPartida && botonNuevaPartida instanceof HTMLButtonElement){
+        if(botonNuevaPartida !== null && botonNuevaPartida !== undefined && botonNuevaPartida instanceof HTMLButtonElement){
             botonNuevaPartida.style.visibility="visible";
         }
     }
+    
+    if(puntuacionInicial===7.5){
+        let boton = document.getElementById("pedirCarta")
+        if(boton !== null && boton !== undefined && boton instanceof HTMLButtonElement){
+            boton.disabled = true 
+        };
+        const resultado = document.getElementById ("resultado")
+        if(resultado !== null && resultado !== undefined && resultado instanceof HTMLElement) {
+            resultado.innerHTML = "¡Lo has clavado! ¡Enhorabuena!"
+        }
+        const botonNuevaPartida = document.getElementById("nuevaPartida")
+        if(botonNuevaPartida !== null && botonNuevaPartida !== undefined && botonNuevaPartida instanceof HTMLButtonElement){
+            botonNuevaPartida.style.visibility="visible";
+        }
+    }
+    
 };
 
 const mePlanto = () => {
     let boton = document.getElementById("pedirCarta")
-        if(boton && boton instanceof HTMLButtonElement){
-            boton.disabled = true 
-        };
-        const resultado = document.getElementById ("resultado")
-        if(resultado){
+    if(boton !== null && boton !== undefined && boton instanceof HTMLButtonElement){
+        boton.disabled = true 
+    };
+    const resultado = document.getElementById ("resultado")
+        if(resultado!== null && resultado !== undefined && resultado instanceof HTMLElement){
             if(puntuacionInicial<4){
                 resultado.innerHTML = "Has sido muy conservador"
             }
@@ -95,7 +124,7 @@ const mePlanto = () => {
                 resultado.innerHTML = "¡Lo has clavado! ¡Enhorabuena!"
             }
             const botonNuevaPartida = document.getElementById("nuevaPartida")
-            if(botonNuevaPartida && botonNuevaPartida instanceof HTMLButtonElement){
+            if(botonNuevaPartida !== null && botonNuevaPartida !== undefined && botonNuevaPartida instanceof HTMLButtonElement){
             botonNuevaPartida.style.visibility="visible";
         }
         };
@@ -109,20 +138,20 @@ const nuevaPartida = () =>{
     let botonNuevaPartida = document.getElementById("nuevaPartida")
     let resultado = document.getElementById ("resultado")
 
-    if(cartaElement && cartaElement instanceof HTMLImageElement){
+    if(cartaElement !== null && cartaElement !== undefined && cartaElement instanceof HTMLImageElement){
         cartaElement.src = "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg"
     }
-    if(puntuacion){
+    if(puntuacion !== null && puntuacion !== undefined && puntuacion instanceof HTMLElement){
         puntuacion.innerHTML = "0"
         puntuacionInicial = 0
     }
-    if(botonPedirCarta && botonPedirCarta instanceof HTMLButtonElement){
+    if(botonPedirCarta !== null && botonPedirCarta !== undefined && botonPedirCarta instanceof HTMLButtonElement){
         botonPedirCarta.disabled=false
     }
-    if(botonNuevaPartida && botonNuevaPartida instanceof HTMLButtonElement){
+    if(botonNuevaPartida !== null && botonNuevaPartida !== undefined && botonNuevaPartida instanceof HTMLButtonElement){
         botonNuevaPartida.style.visibility="hidden";
     }
-    if(resultado){
+    if(resultado !== null && resultado !== undefined && resultado instanceof HTMLElement){
         resultado.innerHTML = ""
     }
 };
