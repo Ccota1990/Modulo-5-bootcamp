@@ -104,11 +104,7 @@ const comprobarPuntuacion =() =>{
     
 };
 
-const mePlanto = () => {
-    let boton = document.getElementById("pedirCarta")
-    if(boton !== null && boton !== undefined && boton instanceof HTMLButtonElement){
-        boton.disabled = true 
-    };
+const resultados = () => {
     const resultado = document.getElementById ("resultado")
         if(resultado!== null && resultado !== undefined && resultado instanceof HTMLElement){
             if(puntuacionInicial<4){
@@ -123,12 +119,20 @@ const mePlanto = () => {
             if(puntuacionInicial===7.5){
                 resultado.innerHTML = "¡Lo has clavado! ¡Enhorabuena!"
             }
-            const botonNuevaPartida = document.getElementById("nuevaPartida")
-            if(botonNuevaPartida !== null && botonNuevaPartida !== undefined && botonNuevaPartida instanceof HTMLButtonElement){
-            botonNuevaPartida.style.visibility="visible";
-        }
-        };
+    };
+};
 
+const mePlanto = () => {
+    let boton = document.getElementById("pedirCarta")
+    if(boton !== null && boton !== undefined && boton instanceof HTMLButtonElement){
+        boton.disabled = true 
+    };
+    resultados();
+    
+    const botonNuevaPartida = document.getElementById("nuevaPartida")
+    if(botonNuevaPartida !== null && botonNuevaPartida !== undefined && botonNuevaPartida instanceof HTMLButtonElement){
+    botonNuevaPartida.style.visibility="visible";
+    }
 };
 
 const nuevaPartida = () =>{
