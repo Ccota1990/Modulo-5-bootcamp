@@ -121,25 +121,30 @@ const resultados = () => {
             }
     };
 };
-
-const mePlanto = () => {
+const deshabilitarBoton = () =>{
     let boton = document.getElementById("pedirCarta")
     if(boton !== null && boton !== undefined && boton instanceof HTMLButtonElement){
         boton.disabled = true 
     };
-    resultados();
-    
+};
+
+const modificarEstadoBoton = (estado: string) =>{
     const botonNuevaPartida = document.getElementById("nuevaPartida")
     if(botonNuevaPartida !== null && botonNuevaPartida !== undefined && botonNuevaPartida instanceof HTMLButtonElement){
-    botonNuevaPartida.style.visibility="visible";
-    }
+    botonNuevaPartida.style.visibility=estado;
+    };
+};
+
+const mePlanto = () => {
+    deshabilitarBoton();
+    resultados();
+    modificarEstadoBoton("visible"); 
 };
 
 const nuevaPartida = () =>{
     let cartaElement = document.getElementById("carta") 
     let puntuacion = document.getElementById("puntos")
     let botonPedirCarta = document.getElementById("pedirCarta")
-    let botonNuevaPartida = document.getElementById("nuevaPartida")
     let resultado = document.getElementById ("resultado")
 
     if(cartaElement !== null && cartaElement !== undefined && cartaElement instanceof HTMLImageElement){
@@ -152,9 +157,7 @@ const nuevaPartida = () =>{
     if(botonPedirCarta !== null && botonPedirCarta !== undefined && botonPedirCarta instanceof HTMLButtonElement){
         botonPedirCarta.disabled=false
     }
-    if(botonNuevaPartida !== null && botonNuevaPartida !== undefined && botonNuevaPartida instanceof HTMLButtonElement){
-        botonNuevaPartida.style.visibility="hidden";
-    }
+    modificarEstadoBoton("hidden")
     if(resultado !== null && resultado !== undefined && resultado instanceof HTMLElement){
         resultado.innerHTML = ""
     }
