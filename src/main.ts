@@ -1,5 +1,6 @@
 
 let puntuacionInicial : number = 0;
+
 const resetPuntuacion = () => {
     let puntuacion = document.getElementById("puntos")
     if(puntuacion !== null && puntuacion !== undefined && puntuacion instanceof HTMLElement){
@@ -18,13 +19,13 @@ const muestraPuntuacion = () => {
 
 document.addEventListener("DOMContentLoaded", muestraPuntuacion);
 
+const obtenerNumeroAlearorio = () => Math.floor (Math.random()*10)+1;
 
-const dameCarta = ()  => {
-    let numeroBase = Math.floor (Math.random()*10)+1;
-    if (numeroBase >7) {
-        return numeroBase+2       
+const dameCarta = (numeAleatorio: number)  => {
+    if (numeAleatorio >7) {
+        return numeAleatorio+2       
     } else{
-        return numeroBase
+        return numeAleatorio
     }
 };
 
@@ -61,12 +62,13 @@ const muestraCarta = (url: string) =>{
     }
 };
 
-const sumarPuntuacion = (carta: number) =>{
-    if(carta<8){
-        puntuacionInicial = puntuacionInicial + carta 
-    }else{
-        puntuacionInicial = puntuacionInicial + 0.5
-    }  
+const obtenerValorCarta = (carta: number) =>{
+    return carta < 8 ? carta :0.5;
+}
+
+const sumarPuntuacion = (valorCarta : number) =>{
+        puntuacionInicial = puntuacionInicial + valorCarta;
+    
 };
 
 const comprobarPuntuacion =() =>{
@@ -81,10 +83,12 @@ const comprobarPuntuacion =() =>{
 };
 
 const pideCarta = () => {
-    const carta = dameCarta();
+    const numeAleatorio = obtenerNumeroAlearorio();
+    const carta = dameCarta(numeAleatorio);
     const url = getUrl(carta);
+    const valorCarta = obtenerValorCarta (carta);
     muestraCarta(url);
-    sumarPuntuacion(carta);
+    sumarPuntuacion(valorCarta);
     muestraPuntuacion();
     comprobarPuntuacion();
 
@@ -104,25 +108,30 @@ const acabarPartida = (mensaje : string) => {
     
 };
 
-
+const pintarMensaje = (mensaje : string) => {
+    const resultado = document.getElementById ("resultado")
+    if(resultado!== null && resultado !== undefined && resultado instanceof HTMLDivElement){
+        resultado.innerHTML = mensaje;
+    }
+};
 
 const resultados = () => {
-    const resultado = document.getElementById ("resultado")
-        if(resultado!== null && resultado !== undefined && resultado instanceof HTMLElement){
+    
             if(puntuacionInicial<4){
-                resultado.innerHTML = "Has sido muy conservador"
+                return "Has sido muy conservador"
             }
             if(puntuacionInicial===5) {
-                resultado.innerHTML = "Te ha entrado el canguelo eh?"
+                return "Te ha entrado el canguelo eh?"
             }
             if(puntuacionInicial>=6 && puntuacionInicial<=7){
-                resultado.innerHTML = "Casi casi..."
+                return "Casi casi..."
             }
             if(puntuacionInicial===7.5){
-                resultado.innerHTML = "¡Lo has clavado! ¡Enhorabuena!"
-            }
+                return "¡Lo has clavado! ¡Enhorabuena!"
+            } 
+            return "No se que ha pasado"
     };
-};
+
 const deshabilitarBoton = () =>{
     let boton = document.getElementById("pedirCarta")
     if(boton !== null && boton !== undefined && boton instanceof HTMLButtonElement){
@@ -139,7 +148,8 @@ const modificarEstadoBoton = (estado: string) =>{
 
 const mePlanto = () => {
     deshabilitarBoton();
-    resultados();
+    const mensaje = resultados ();
+    pintarMensaje(mensaje);
     modificarEstadoBoton("visible"); 
 };
 
