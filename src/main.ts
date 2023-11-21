@@ -73,11 +73,14 @@ const sumarPuntuacion = (valorCarta : number) =>{
 
 const comprobarPuntuacion =() =>{
     if(puntuacionInicial>7.5){
-        acabarPartida("¡¡Game over!!")
+        modificarBotonMePlanto(true);
+        acabarPartida("¡¡Game over!!");
     }
     
     if(puntuacionInicial===7.5){
-        acabarPartida("¡Lo has clavado! ¡Enhorabuena!")
+        modificarBotonMePlanto(true);
+        acabarPartida("¡Lo has clavado! ¡Enhorabuena!");
+
     }
     
 };
@@ -96,10 +99,7 @@ const pideCarta = () => {
 
 
 const acabarPartida = (mensaje : string) => {
-    let boton = document.getElementById("pedirCarta")
-    if(boton  !== null && boton!== undefined && boton instanceof HTMLButtonElement){
-        boton.disabled = true 
-    };
+    modificarBotonPedirCarta(true);
     const resultado = document.getElementById ("resultado")
     if(resultado !== null && resultado !== undefined && resultado instanceof HTMLElement) {
         resultado.innerHTML = mensaje
@@ -132,10 +132,17 @@ const resultados = () => {
             return "No se que ha pasado"
     };
 
-const deshabilitarBoton = () =>{
-    let boton = document.getElementById("pedirCarta")
-    if(boton !== null && boton !== undefined && boton instanceof HTMLButtonElement){
-        boton.disabled = true 
+const modificarBotonPedirCarta = (estado: boolean) =>{
+    let botonPedirCarta = document.getElementById("pedirCarta")
+    if(botonPedirCarta !== null && botonPedirCarta !== undefined && botonPedirCarta instanceof HTMLButtonElement){
+        botonPedirCarta.disabled = estado
+    };
+};
+
+const modificarBotonMePlanto = (estado : boolean) =>{
+    let botonMePlanto = document.getElementById("meplanto")
+    if(botonMePlanto !== null && botonMePlanto !== undefined && botonMePlanto instanceof HTMLButtonElement){
+        botonMePlanto.disabled=estado
     };
 };
 
@@ -147,7 +154,8 @@ const modificarEstadoBoton = (estado: string) =>{
 };
 
 const mePlanto = () => {
-    deshabilitarBoton();
+    modificarBotonPedirCarta(true);
+    modificarBotonMePlanto(true);
     const mensaje = resultados ();
     pintarMensaje(mensaje);
     modificarEstadoBoton("visible"); 
@@ -162,13 +170,6 @@ const resetCarta = () => {
 
 };
 
-const modificarBotonPedirCarta = () =>{
-    let botonPedirCarta = document.getElementById("pedirCarta")
-    if(botonPedirCarta !== null && botonPedirCarta !== undefined && botonPedirCarta instanceof HTMLButtonElement){
-        botonPedirCarta.disabled=false
-    }
-};
-
 const resetMensaje =() =>{
     let resultado = document.getElementById ("resultado")
     if(resultado !== null && resultado !== undefined && resultado instanceof HTMLElement){
@@ -180,7 +181,8 @@ const resetMensaje =() =>{
 const nuevaPartida = () =>{ 
     resetPuntuacion()
     resetCarta()
-    modificarBotonPedirCarta()
+    modificarBotonPedirCarta(false)
+    modificarBotonMePlanto(false)
     modificarEstadoBoton("hidden")
     resultados()
     resetMensaje()
